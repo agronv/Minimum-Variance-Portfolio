@@ -28,3 +28,4 @@ const string &folder="quotes"){
   printToFile(fName,quandlData);
  }
 }
+

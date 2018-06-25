@@ -178,9 +178,6 @@ int main(){
     }
   }
 
-  for(i=0; i<size;++i){
-    cout<<minWeights[i]<<endl;
-  }
     // in these loops we will put a 0 where our index was deleted and the weight where
     // it was not
 
@@ -300,7 +297,7 @@ int main(){
     vector<vector<double> > mcminus1, M, invM;
     vector< double> M1;
     double mu, a, b;
-    cout<<"PLEASE ENTER YOUR DESIRED RETURN (in decimals): ";
+    cout<<"Please enter your desired return (in decimals): ";
     cin>>mu;
     cout<<endl;
 

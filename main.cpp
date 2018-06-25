@@ -1,10 +1,10 @@
-
-#include<iostream>
-#include<vector>
-#include<fstream>
+# include<iostream>
+# include<vector>
+# include<fstream>
 # include <cmath>
-# include "matrix.h"
 # include <map>
+# include "matrix.h"
+# include "DataExtraction.h"
 using namespace std;
 
 
@@ -16,8 +16,8 @@ int main(){
   double money, sum, sum1, sum2, sum3;
   int transaction, shortsell, desired;
 
-  size = 300;
-  column = 50;
+  size = 100;
+  column = 30;
   cout<<"How much money would you like to invest: ";
   cin>>money; cout<<endl;
   cout<<"Is there a transaction fee (enter 1 for yes or 0 for no): ";
@@ -33,6 +33,8 @@ int main(){
   returns.reserve(size);
   getVectorOfReturn(returns,tickers, size, column);
 
+  // we must transpose the returns matrix because we want to correlate the stocks
+  // not the days
   transreturns = Transpose(returns);
 
   covariance = Covariance(transreturns);
@@ -69,7 +71,7 @@ int main(){
   //////////////////////////////////////////////////////////////////////////////
   //minimum variance with shortselling and no desired return
   if((shortsell ==0) && (desired ==0)){
-    int negative = 0, negative_index, indicator, fast;
+    int negative = 0, negative_index, indicator, fast, deleted = 1;
     vector<double> posInvCovOnes;
     vector< vector<double> > posCovariance, posInvCovariance, posReturns, posTransReturns;
     double smallest;
@@ -99,11 +101,12 @@ int main(){
       }
     }
 
-
     else if(negative == 1 && fast == 0){
+    // this way is very computationally slow
     // this loop will stop when all the weights are positive or there is only
     // one stock left, we will essentially delete the lowest weight and recalculate
-    // the minweights until all the weights are positive
+    // the minweights until all the weights are positive, at the end we are usually
+    // left with only a handful of stocks
     while((size>1) && (negative==1)){
       smallest = 0; //or should i say small negative
 
@@ -118,6 +121,9 @@ int main(){
       // deleting it from our matrix of returns
       tickers.erase(tickers.begin() + negative_index);
       --size;
+      if(deleted==1){cout<<deleted<<" stock was deleted"<<endl;}
+      else{cout<<deleted<<" stocks were deleted"<<endl;}
+      ++deleted;
       // now we will find the returns of whats left
       posReturns.reserve(size);
       getVectorOfReturn(posReturns,tickers, size, column);
@@ -161,10 +167,6 @@ int main(){
         }
       }
 
-      for(i = 0; i < size; ++i){
-        cout<<minWeights[i]<<" ";
-      }
-      cout<<endl;
       // lastly we will free up memory from all the vectors so that we can use
       // them again
       vector<double>().swap(posInvCovOnes);
@@ -174,6 +176,11 @@ int main(){
       vector< vector<double> >().swap(posTransReturns);
 
     }
+  }
+
+  for(i=0; i<size;++i){
+    cout<<minWeights[i]<<endl;
+  }
     // in these loops we will put a 0 where our index was deleted and the weight where
     // it was not
 
@@ -182,7 +189,6 @@ int main(){
     }
 
   }
-}
 
 
   //////////////////////////////////////////////////////////////////////////////
@@ -191,7 +197,7 @@ int main(){
   vector<vector<double> > mcminus1, M, invM;
   vector< double> M1;
   double mu, a, b;
-  cout<<"PLEASE ENTER YOUR DESIRED RETURN (in decimals): ";
+  cout<<"please enter your desired return in decimals (in decimals): ";
   cin>>mu;
   cout<<endl;
 

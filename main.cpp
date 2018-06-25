@@ -1,3 +1,10 @@
+// Agron Velovic
+// cd C:\Users\avela\Desktop\c++\quotes
+// g++ -c -g MVP.cpp
+/* g++ -g -o MVP MVP.o
+  MVP.exe
+  */
+
 # include<iostream>
 # include<vector>
 # include<fstream>
@@ -16,8 +23,11 @@ int main(){
   double money, sum, sum1, sum2, sum3;
   int transaction, shortsell, desired;
 
-  size = 100;
-  column = 30;
+  // some user input
+  cout<<"How many stocks would you like to sample from (100 maximum): "<<endl;
+  cin>>size;
+  cout<<"How many days would you like to sample from enter a reasonable amount: "<<endl;
+  cin>>column;
   cout<<"How much money would you like to invest: ";
   cin>>money; cout<<endl;
   cout<<"Is there a transaction fee (enter 1 for yes or 0 for no): ";
@@ -26,6 +36,7 @@ int main(){
   cin>>desired; cout<<endl;
   cout<<"Would you like to short sell (enter 1 for yes and 0 for no): ";
   cin>>shortsell; cout<<endl;
+
 
   tickers.reserve(size);
   tickerName(tickers, size);
@@ -446,4 +457,13 @@ int main(){
   for(auto it = portfolio.begin(); it != portfolio.end(); ++it){
     cout<<it->first<<": "<<it->second<<endl;
   }
+
+  // sanity check
+  sum = 0;
+  for(i=0; i<size;++i){
+    sum += minWeights[i];
+  }
+  cout<<"Sum of weights: "<<sum<<endl;
+
+  return 0;
 }

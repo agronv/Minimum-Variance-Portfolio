@@ -1,7 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<fstream>
-# include <cmath>
+#include <cmath>
 using namespace std;
 
 double strWord(int index, string line)

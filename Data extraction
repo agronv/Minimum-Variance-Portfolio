@@ -3,6 +3,7 @@
 #include<fstream>
 #include <cmath>
 using namespace std;
+typedef long int myint;
 
 double strWord(int index, string line)
 {
@@ -35,12 +36,12 @@ void getVector(int index, vector<double> &price, string filename){
     price.push_back(strWord(index,line));
     }
   }
-  else{cout<<"Wrong";}
   f.close();
   price.erase(price.begin());
 }
 
 void logReturn(vector<double>& a, vector<double>& b, vector<double>& c, const int& column){
+  // this function will calculate the log return of every day per stock
   for(int i=0;i<column;++i){
     c[i]=log(a[i]/b[i]);
   }
@@ -57,7 +58,7 @@ void getVectorOfReturn(vector<vector<double>>& returns, vector<string>& tickers,
    string filename="quotes"+tickers[i]+".txt";
    getVector(5,endPrice,filename);
    getVector(2,openPrice,filename);
-   /*logReturn(endPrice,openPrice,logReturn, column);*/
+
    for(int i=0;i<size;++i){
      logReturn.push_back(endPrice[i]/openPrice[i]-1);
    }
@@ -66,21 +67,23 @@ void getVectorOfReturn(vector<vector<double>>& returns, vector<string>& tickers,
 }
 
 void tickerName(vector<string>& tickers, const int& size){
+  // this function will open up the file named tickers.txt and put all of the tickernames
+  // within a vector
   ifstream t;
-  t.open("600+tickers.txt");
+  string input;
+  t.open("tickers.txt");
   string ticker;
   if(t.is_open()){
-    for(int i;i<size;++i){
+    for(int i=0;i<size;++i){
       getline(t,ticker);
       tickers.push_back(ticker);
      }
     }
-  else{cout<<"Wrong";}
   t.close();
 }
 
 
-typedef long int myint;
+
 void printToFile(string filename, const string &text){
   ofstream mfile;
   mfile.open(filename);
@@ -95,3 +98,4 @@ static size_t writerF(void *ptr, size_t size, size_t nmemb, void *userdata){
   ((string*)userdata)->append((char*)ptr, size * nmemb);
   return size * nmemb;
 }
+

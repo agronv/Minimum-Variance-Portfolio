@@ -1,9 +1,3 @@
-// Agron Velovic
-// cd C:\Users\avela\Desktop\c++\quotes
-// g++ -c -g MVP.cpp
-/* g++ -g -o MVP MVP.o
-  MVP.exe
-  */
 
 # include<iostream>
 # include<vector>

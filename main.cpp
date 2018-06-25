@@ -26,7 +26,7 @@ int main(){
   // some user input
   cout<<"How many stocks would you like to sample from (100 maximum): "<<endl;
   cin>>size;
-  cout<<"How many days would you like to sample from enter a reasonable amount: "<<endl;
+  cout<<"How many days would you like to sample from: "<<endl;
   cin>>column;
   cout<<"How much money would you like to invest: ";
   cin>>money; cout<<endl;
